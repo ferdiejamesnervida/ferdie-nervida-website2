@@ -1418,4 +1418,21 @@ textarea:focus {
 .btn:focus, .nav-link:focus {
     outline: 2px solid #3b82f6;
     outline-offset: 2px;
+}
+
+/* Enhanced mailto button styling */
+.btn-large {
+    font-size: 1.1rem;
+    padding: 1.2rem 2rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-large:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
 } 

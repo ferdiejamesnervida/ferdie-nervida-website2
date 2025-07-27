@@ -57,41 +57,8 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Form handling with Formspree
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        // Don't prevent default - let Formspree handle the submission
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Basic validation
-        if (!data.name || !data.email || !data.service) {
-            e.preventDefault();
-            showMessage('Please fill in all required fields.', 'error');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(data.email)) {
-            e.preventDefault();
-            showMessage('Please enter a valid email address.', 'error');
-            return;
-        }
-        
-        // Show loading state
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        // Formspree will handle the submission and redirect
-        // The form will submit to Formspree which will email you
-    });
-}
+// Mailto link handling - no form processing needed
+// The mailto link will open the user's email client directly
 
 // Show success/error messages
 function showMessage(message, type) {
