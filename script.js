@@ -99,13 +99,206 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.service-card, .testimonial-card, .about-item, .stat');
-    animateElements.forEach(el => {
-        observer.observe(el);
-    });
-});
+// Carousel Class
+class Carousel {
+    constructor(container, options = {}) {
+        this.container = container;
+        this.track = container.querySelector('.carousel-track');
+        this.slides = container.querySelectorAll('.carousel-slide');
+        this.dots = container.querySelectorAll('.carousel-dot');
+        this.prevBtn = container.querySelector('.carousel-prev');
+        this.nextBtn = container.querySelector('.carousel-next');
+        
+        this.currentSlide = 0;
+        this.slideCount = this.slides.length;
+        this.isAutoPlaying = true;
+        this.autoPlayInterval = options.autoPlayInterval || 5000;
+        this.autoPlayTimer = null;
+        
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+        this.updateSlides();
+        this.startAutoPlay();
+        this.observeSlides();
+    }
+    
+    setupEventListeners() {
+        // Navigation buttons
+        this.prevBtn.addEventListener('click', () => this.prev());
+        this.nextBtn.addEventListener('click', () => this.next());
+        
+        // Dot indicators
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (this.container.matches(':hover') || this.container.matches(':focus-within')) {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    this.prev();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    this.next();
+                }
+            }
+        });
+        
+        // Touch/swipe support
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        
+        this.track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            this.pauseAutoPlay();
+        });
+        
+        this.track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            const diff = startX - currentX;
+            
+            // Prevent default scrolling when swiping horizontally
+            if (Math.abs(diff) > 10) {
+                e.preventDefault();
+            }
+        });
+        
+        this.track.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const diff = startX - currentX;
+            const threshold = 50;
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }
+            
+            this.resumeAutoPlay();
+        });
+        
+        // Mouse drag support
+        this.track.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+            this.pauseAutoPlay();
+            e.preventDefault();
+        });
+        
+        this.track.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+        });
+        
+        this.track.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const diff = startX - currentX;
+            const threshold = 50;
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    this.next();
+                } else {
+                    this.prev();
+                }
+            }
+            
+            this.resumeAutoPlay();
+        });
+        
+        // Hover to pause
+        this.container.addEventListener('mouseenter', () => this.pauseAutoPlay());
+        this.container.addEventListener('mouseleave', () => this.resumeAutoPlay());
+        
+        // Focus to pause
+        this.container.addEventListener('focusin', () => this.pauseAutoPlay());
+        this.container.addEventListener('focusout', () => this.resumeAutoPlay());
+    }
+    
+    updateSlides() {
+        const slideWidth = this.slides[0].offsetWidth + 32; // Include gap
+        const translateX = -this.currentSlide * slideWidth;
+        
+        this.track.style.transform = `translateX(${translateX}px)`;
+        
+        // Update dots
+        this.dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentSlide);
+        });
+        
+        // Update ARIA labels
+        this.dots.forEach((dot, index) => {
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+        });
+        
+        // Update navigation buttons
+        this.prevBtn.setAttribute('aria-label', `Previous slide (${this.currentSlide + 1} of ${this.slideCount})`);
+        this.nextBtn.setAttribute('aria-label', `Next slide (${this.currentSlide + 1} of ${this.slideCount})`);
+    }
+    
+    next() {
+        this.currentSlide = (this.currentSlide + 1) % this.slideCount;
+        this.updateSlides();
+    }
+    
+    prev() {
+        this.currentSlide = this.currentSlide === 0 ? this.slideCount - 1 : this.currentSlide - 1;
+        this.updateSlides();
+    }
+    
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.updateSlides();
+    }
+    
+    startAutoPlay() {
+        if (this.autoPlayTimer) {
+            clearInterval(this.autoPlayTimer);
+        }
+        
+        this.autoPlayTimer = setInterval(() => {
+            if (this.isAutoPlaying) {
+                this.next();
+            }
+        }, this.autoPlayInterval);
+    }
+    
+    pauseAutoPlay() {
+        this.isAutoPlaying = false;
+    }
+    
+    resumeAutoPlay() {
+        this.isAutoPlaying = true;
+    }
+    
+    observeSlides() {
+        // Observe slides for intersection
+        this.slides.forEach(slide => {
+            observer.observe(slide);
+        });
+    }
+    
+    destroy() {
+        if (this.autoPlayTimer) {
+            clearInterval(this.autoPlayTimer);
+        }
+    }
+}
+
+
 
 // Counter animation for stats
 function animateCounter(element, target, duration = 2000) {
@@ -141,13 +334,7 @@ const statsObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.5 });
 
-// Observe stats for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const stats = document.querySelectorAll('.stat');
-    stats.forEach(stat => {
-        statsObserver.observe(stat);
-    });
-});
+
 
 // Parallax effect for hero section
 window.addEventListener('scroll', () => {
@@ -317,6 +504,26 @@ window.addEventListener('scroll', debouncedScrollHandler);
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Ferdie Nervida website loaded successfully!');
+    
+    // Initialize carousel
+    const carouselContainer = document.querySelector('.carousel-container');
+    if (carouselContainer) {
+        window.carousel = new Carousel(carouselContainer, {
+            autoPlayInterval: 5000
+        });
+    }
+    
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.service-card, .testimonial-card, .about-item, .stat');
+    animateElements.forEach(el => {
+        observer.observe(el);
+    });
+    
+    // Observe stats for animation
+    const stats = document.querySelectorAll('.stat');
+    stats.forEach(stat => {
+        statsObserver.observe(stat);
+    });
     
     // Add loading animation to page
     document.body.style.opacity = '0';
