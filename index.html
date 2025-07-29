@@ -194,29 +194,121 @@ how about Let's <!DOCTYPE html>
                 <p>Featured in major media outlets and trusted by government agencies across the Philippines.</p>
             </div>
             
-            <!-- Featured Events -->
+            <!-- Featured Events Carousel -->
             <div class="featured-events">
                 <h3>Recent Speaking Engagements</h3>
-                <div class="events-grid">
-                    <div class="event-card">
-                        <div class="event-image">
-                            <img src="innovationsummit.png" alt="Innovation Summit 2024" class="event-photo">
-                        </div>
-                        <div class="event-content">
-                            <h4>Innovation Summit 2024</h4>
-                            <p class="event-location">Davao City Chamber of Commerce</p>
-                            <p>"Cryptocurrency, Fintech and Cooperatives" keynote presentation</p>
+                <div class="carousel-container" role="region" aria-label="Speaking Engagements Carousel">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-track" id="carousel-track" aria-live="polite">
+                            <!-- Event 1 -->
+                            <div class="carousel-slide">
+                                <div class="event-card">
+                                    <div class="event-image">
+                                        <img src="Davao De Oro Blockchain Info Session.png" alt="Blockchain for Digital Workforce Info Session" class="event-photo">
+                                    </div>
+                                    <div class="event-content">
+                                        <h4>Blockchain for Digital Workforce Info Session</h4>
+                                        <p class="event-location">Online via Zoom</p>
+                                        <p>DICT Davao de Oro successfully hosted the Information Session on "Blockchain for the Digital Workforce" engaging 196 participants across government, private sector, and academia—uniting stakeholders to advance digital readiness.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Event 2 -->
+                            <div class="carousel-slide">
+                                <div class="event-card">
+                                    <div class="event-image">
+                                        <img src="blockchain_crypto_specialist.png" alt="DICT SPARK Blockchain & Cryptocurrency Specialist Certification" class="event-photo">
+                                    </div>
+                                    <div class="event-content">
+                                        <h4>DICT SPARK Blockchain & Cryptocurrency Specialist Certification</h4>
+                                        <p class="event-location">Hybrid, Dinagat Islands & Philippines Online</p>
+                                        <p>First DICT SPARK Blockchain Certification Training yields 21 Blockchain and Cryptocurrency Specialists, forging partnership with DJEMC. Week-long hybrid training covering blockchain technology, DeFi, NFTs, and cybersecurity.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Event 3 -->
+                            <div class="carousel-slide">
+                                <div class="event-card">
+                                    <div class="event-image">
+                                        <img src="digital_leaders.png" alt="Blockchain and Fintech for Digital Leaders" class="event-photo">
+                                    </div>
+                                    <div class="event-content">
+                                        <h4>Blockchain and Fintech for Digital Leaders</h4>
+                                        <p class="event-location">SMX Convention Hall, Davao City</p>
+                                        <p>DICT Executive Briefing for Digital Government Leaders discussing emerging technologies in shaping smarter governance—from digital identity to secure data systems powered by blockchain, AI, IoT, 5G, and cybersecurity.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Event 4 -->
+                            <div class="carousel-slide">
+                                <div class="event-card">
+                                    <div class="event-image">
+                                        <img src="innovationsummit.png" alt="Davao Chamber Innovation Summit 2024" class="event-photo">
+                                    </div>
+                                    <div class="event-content">
+                                        <h4>Davao Chamber Innovation Summit 2024</h4>
+                                        <p class="event-location">SMX Convention Center, Davao City</p>
+                                        <p>Featured speaker on blockchain and the future of payments for the business sector. Key insight: True innovation isn't about reinventing the wheel—it's about making technology inclusive, lifting everyone toward a shared future.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Event 5 -->
+                            <div class="carousel-slide">
+                                <div class="event-card">
+                                    <div class="event-image">
+                                        <img src="campusconference.png" alt="Blockchain Campus Conference" class="event-photo">
+                                    </div>
+                                    <div class="event-content">
+                                        <h4>Blockchain Campus Conference</h4>
+                                        <p class="event-location">Mapúa Malayan Colleges Philippines</p>
+                                        <p>Featured speaker on Blockchain, Web3, Cybersecurity and the future of AI. "Blockchain Cyber Tech Detection: Exploring AI-Powered Investigations for Safer Digital Assets."</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Event 6 -->
+                            <div class="carousel-slide">
+                                <div class="event-card">
+                                    <div class="event-image">
+                                        <img src="pbw.jpeg" alt="Philippine Blockchain Week" class="event-photo">
+                                    </div>
+                                    <div class="event-content">
+                                        <h4>Philippine Blockchain Week</h4>
+                                        <p class="event-location">Davao City, Philippines</p>
+                                        <p>Blockchain Cyber Tech Detection: Exploring AI-Powered Investigations for Safer Digital Assets. Expert insights on securing digital assets through advanced blockchain forensics and AI-powered detection systems.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="event-card">
-                        <div class="event-image">
-                            <img src="campusconference.png" alt="Blockchain Campus Conference" class="event-photo">
+                    
+                    <!-- Navigation Controls -->
+                    <button class="carousel-nav carousel-prev" aria-label="Previous slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-nav carousel-next" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    
+                    <!-- Dot Indicators -->
+                    <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Carousel navigation">
+                        <div class="carousel-counter" aria-live="polite">
+                            <span id="current-slide">1</span> of <span id="total-slides">6</span>
                         </div>
-                        <div class="event-content">
-                            <h4>Blockchain Campus Conference</h4>
-                            <p class="event-location">Mapúa Malayan Colleges</p>
-                            <p>"AI-Powered Blockchain Forensics" featured speaker</p>
-                        </div>
+                        <button class="carousel-dot active" role="tab" aria-selected="true" aria-label="Go to slide 1" data-slide="0"></button>
+                        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Go to slide 2" data-slide="1"></button>
+                        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Go to slide 3" data-slide="2"></button>
+                        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Go to slide 4" data-slide="3"></button>
+                        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Go to slide 5" data-slide="4"></button>
+                        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Go to slide 6" data-slide="5"></button>
                     </div>
                 </div>
             </div>
