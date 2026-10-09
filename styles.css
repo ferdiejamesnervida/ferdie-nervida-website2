@@ -1544,6 +1544,23 @@ p {
     font-size: 0.9rem;
 }
 
+.footer-bir {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+/* White card keeps the QR code's quiet zone intact on the dark footer */
+.footer-bir img {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
